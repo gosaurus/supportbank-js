@@ -1,22 +1,28 @@
 import { promises as fs } from "fs";
+import * as path from "path";
 
 
-async function readInput() : Promise<any> {
-    try {
-        const data = await fs.readFile("./Transactions2014.csv", "utf-8");
-        console.log("File content: \n" + data);
-        return data
-        
-    } catch (err) {
-        console.log("Error reading file: ", err);
-    }
+async function readInput(): Promise<any> {
+    const filePath = path.join(__dirname, "../Transactions2014.csv");
+    console.log(filePath);
+    const data = await fs.readFile(filePath, "utf-8");
+    if (!data || data.trim().length === 0) {
+        throw new Error(`Error: no input found or error reading file.`)
+    } 
+    return data;
 };
 
-const transactionsList: string[] = [];
-
-async function parseTransactionData() {
+async function parseData(): Promise<string[]> {
+    let transactionsList: string[] = [];
     const transactionData = await readInput();
-    transactionData.split("\n");
-
+    return transactionsList = transactionData.split("\n");
 }
 
+async function main() {
+    const parsedData = await parseData();
+    parsedData.forEach((transaction: string) => 
+        console.log(transaction)
+    );
+}
+
+main();
