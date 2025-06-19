@@ -52,7 +52,6 @@ function readInput() {
         if (!data || data.trim().length === 0) {
             throw new Error(`Error: no input found or error reading file.`);
         }
-        console.log("File content: \n" + data);
         return data;
     });
 }
@@ -70,5 +69,6 @@ function main() {
         parsedData.forEach((transaction) => console.log(transaction));
     });
 }
+console.log("Calling main() from index.ts");
 main();
 //# sourceMappingURL=index.js.map
