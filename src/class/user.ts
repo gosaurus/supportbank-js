@@ -15,5 +15,7 @@ export class User {
         this.transactionOwed = [];
     }
 
-    
+    toString() {
+        console.log(`User ${this.name} created`);
+    }
 }
