@@ -18,4 +18,18 @@ export class User {
     toString() {
         console.log(`User ${this.name} created`);
     }
+
+    addTransactionPaidFromUser(newTransaction: Transaction) {
+        this.transactionPaid.push(newTransaction);
+    }
+    
+    addTransactionOwedByUser(newTransaction: Transaction) {
+        this.transactionOwed.push(newTransaction);
+    }
+
+    totalBalance() {
+        let totalPaid = 0;
+        let totalOwed = 0;
+        // logic to work out money...
+    }
 }

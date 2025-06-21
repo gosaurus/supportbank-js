@@ -6,32 +6,43 @@ import { poundsToPence } from "./utils/moneyMath.js";
 
 async function main() {
     const parsedData = await parseData();
-    console.log(`testing parsedData worked: ${parsedData[3]}`);
+
     const supportbank = new Bank();
 
     for (var i = 1; i < 10; i++) {
         const transactionLine = parsedData[i].split(",");
-        console.log(`tl = ${transactionLine}`);
+        console.log(`tl = ${transactionLine}, ${typeof(transactionLine)}`);
         
-        //create user if new
+        
+        // if User does not exist, create new instance of User and add to Bank
         if (!supportbank.userExists(supportbank.users, transactionLine[1])) {
-            console.log(`checking tl[1] = ${transactionLine[1]}, tl2 = ${transactionLine[2]}`)
             const newUser = new User(transactionLine[1]);
-            newUser.toString();
             supportbank.users.push(newUser);
         }
+        // retrieve existing User from Bank
+        const userInstance = supportbank.getUser(supportbank.users, transactionLine[1]);
 
-        //
-        if (!supportbank.transactionIds.includes(i+1)) {
-            const newTransaction = new Transaction(
-                transactionLine[0],
-                transactionLine[1],
-                transactionLine[2],
-                transactionLine[3],
-                poundsToPence(transactionLine[4])
-            )
+        // create new instance of Transaction
+        const newTransaction = new Transaction(
+            i + 1, //unique transactions to allow for duplicate-looking transactions
+            transactionLine[0], //date
+            transactionLine[1], //user FROM
+            transactionLine[2], //user TO
+            transactionLine[3], //narrative
+            poundsToPence(transactionLine[4]) //amountInPence
+        )
+
+        // add new Transaction to Bank if not duplicated
+        // add Transaction to user's transactionOwed list
+        if (!supportbank.transactionExists(supportbank.transactions, newTransaction)) {
+           supportbank.transactions.push(newTransaction);
+           userInstance.addTransactionOwedByUser(newTransaction);
         }
+
+
     }
+
+
 }
 
 console.log("Calling main() from index.ts")
