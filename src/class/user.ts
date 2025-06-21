@@ -7,8 +7,6 @@ export class User {
 
     constructor(
         name: string,
-        // transactionPaid: Transaction[],
-        // transactionOwed: Transaction[]
     ) {
         this.name = name;
         this.transactionPaid = [];
