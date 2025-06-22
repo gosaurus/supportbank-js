@@ -2,15 +2,15 @@ import { Transaction } from "./transaction.js";
 
 export class User {
     name: string;
-    transactionPaid: Transaction[];
-    transactionOwed: Transaction[];
+    transactionsPaid: Transaction[];
+    transactionsOwed: Transaction[];
 
     constructor(
         name: string,
     ) {
         this.name = name;
-        this.transactionPaid = [];
-        this.transactionOwed = [];
+        this.transactionsPaid = [];
+        this.transactionsOwed = [];
     }
 
     toString() {
@@ -18,16 +18,32 @@ export class User {
     }
 
     addTransactionPaidFromUser(newTransaction: Transaction) {
-        this.transactionPaid.push(newTransaction);
+        this.transactionsPaid.push(newTransaction);
     }
     
     addTransactionOwedByUser(newTransaction: Transaction) {
-        this.transactionOwed.push(newTransaction);
+        this.transactionsOwed.push(newTransaction);
     }
 
     totalBalance() {
         let totalPaid = 0;
         let totalOwed = 0;
         // logic to work out money...
+    }
+    
+    transactionPaidExists(newTransaction: Transaction, ): boolean {
+        for (const transaction of this.transactionsPaid) {
+                if (transaction === newTransaction)
+                    return true;
+            }
+        return false;
+    }
+
+    transactionOwedExists(newTransaction: Transaction, transactionsOwed: Transaction[]): boolean {
+        for (const transaction of transactionsOwed) {
+                if (transaction === newTransaction)
+                    return true;
+            }
+        return false;
     }
 }
